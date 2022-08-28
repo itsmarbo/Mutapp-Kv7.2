@@ -228,7 +228,7 @@ createApp({
     },
     // To be done after the app has been finished
     mounted() {
-        Object.keys(this.aaMut).foreach(element => {
+        Object.keys(this.aaMut).forEach(element => {
             this.aaImgs[element] = new Image();
             this.aaImgs[element].src = "IMG/" + this.aaMut[element][1];
         });
