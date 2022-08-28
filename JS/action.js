@@ -3,7 +3,7 @@ const { createApp } = Vue
 createApp({
     data() {
         return {
-            endpoint: "",
+            endpoint: "http://itsmarbo.pythonanywhere.com/",
             dnaSequence: ["A"],
             aaSequence: ["G"],
             dnaPostSequence: ["A"],
