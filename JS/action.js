@@ -169,11 +169,11 @@ createApp({
                         this.spinnerShow = true;
                         axios
                             .get(this.endpoint + 'aamutate',
-                            {
-                                params: {
-                                code: this.aaMutCode
-                            }
-                            })
+                                {
+                                    params: {
+                                        code: this.aaMutCode
+                                    }
+                                })
                             .then(response => {
                                 console.log(response.data);
                                 this.spinnerShow = false;
@@ -209,10 +209,9 @@ createApp({
                     this.dnaPostSequence = response.data.split("");
                 })
                 .catch(error => {
-                    this.spinnerShow = false;
                     console.log(error);
-                });
-        }
+                })
+        };
         const getAASequence = async () => {
             await axios
                 .get(this.endpoint + 'aaseq')
@@ -222,8 +221,8 @@ createApp({
                 })
                 .catch(error => {
                     console.log(error);
-                });
-        }
+                })
+        };
         getDNASequence();
         getAASequence();
     },
