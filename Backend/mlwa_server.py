@@ -160,10 +160,10 @@ def aa_mutator(code):
                     new_seq_list[numero - 1] = ultima
                     predicted_mutation = ML_model.get_prediction(primera, numero + 1, ultima)
                     return {"pathogenicity": predicted_mutation["pathogenicity"],
-                                "percent" : predicted_mutation ["percent"],
-                                "code": predicted_mutation ["code"],
-                                "model": True,
-                                "sequence": "".join(new_seq_list)}
+                            "percent" : predicted_mutation ["percent"],
+                            "code": predicted_mutation ["code"],
+                            "model": True,
+                            "sequence": "".join(new_seq_list)}
                 else:
                     print("The letter from the code and the sequence at the provided position doesn't match")
                     return {"pathogenicity": False,
