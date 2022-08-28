@@ -125,11 +125,11 @@ createApp({
                         this.spinnerShow = true;
                         axios
                             .get(this.endpoint + 'dnamutate',  //To send the input into a new route
-                            {
-                                params: {
-                                code: this.dnaMutCode  //Include code as an argument
-                                }
-                            })
+                                {
+                                    params: {
+                                    code: this.dnaMutCode  //Include code as an argument
+                                    }
+                                })
                             .then(response => {
                                 console.log(response.data);  //If everything works correctly
                                 this.spinnerShow = false;
@@ -144,15 +144,15 @@ createApp({
                                 this.spinnerShow = false;
                                 console.log(error);  //If something does not work correctly
                             })
-                        } else {
-                            console.log("Error in the number")
-                        }
                     } else {
-                        console.log("Error in the letters")
+                        console.log("Error in the number")
                     }
                 } else {
-                    console.log("Error in the longitude")
-                }        
+                    console.log("Error in the letters")
+                }
+            } else {
+                console.log("Error in the longitude")
+            }        
         },
         //Method to send the code of the mutation to the DNA-backend
         runAA() {
