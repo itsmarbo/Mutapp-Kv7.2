@@ -31,10 +31,10 @@ createApp({
                 "T": ["Threonine", "Threonine.png"],
             },
             dnaMut: {
-                "A": ["Adenine", "adenine.png"],
-                "T": ["Thymine", "thymine.png"],
-                "G": ["Guanine", "guanine.png"],
-                "C": ["Cytosine", "cytosine.png"]
+                "A": ["Adenine", "Adenine.png"],
+                "T": ["Thymine", "Thymine.png"],
+                "G": ["Guanine", "Guanine.png"],
+                "C": ["Cytosine", "Cytosine.png"]
             },
             dna: 0,
             aa: 0,
