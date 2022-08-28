@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Machine Learning Web Application</title>
+        <!-- Vue section -->
+        <script src="https://unpkg.com/vue@3"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.27.2/axios.min.js"></script>
+        <!-- CSS only -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+        <link rel="stylesheet" href="CSS/sexy.css">
+    </head>
+    <body>
+
+        <div id="app">
+
+            <!-- Blue Navbar -->
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+                <div class="container-fluid">
+                    <a class="navbar-brand" href="#">MutaGen Kv7.2</a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                        <div class="navbar-nav">
+                            <a class="nav-link" href="#" @click="show('dnaShow')">DNA</a>
+                            <a class="nav-link" href="#" @click="show('aaShow')">Amino Acid</a>
+                            <a class="nav-link" href="#" @click="show('aboutShow')">About</a>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+
+            <!--Introduction to the website-->
+            <div class="container mainDiv">
+                <h1>MutaGen Kv7.2</h1>
+                <p class="text-center">A free machine learning web service to predict pathogenicity of missense variants in Kv7.2 channels</p>
+                <hr>
+                <!-- About -->
+                <div class="aboutShow" v-if="aboutShow">
+                    <h2>About</h2>
+                    <p>MutaGen stands for <b>MUT</b>ations in <b>GEN</b>s, more specifically missence mutations in KV7.2 channel. The purpose is to provide the probability of these mutations,
+                    making a timely detection and increasing the anticipation of abnormal situations.</p>
+                </div>
+                <!-- How to -->
+                <div class="card border-light">
+                    <div class="card-header"><h2>How to...</h2></div>
+                    <div class="card-body text-dark">
+                      <p>To run the analysis you need to provide the mutation using three components: the initial mutation, position (number) and final mutation.</p>
+                      <h5 class="card-title">Steps: </h5>
+                      <p> 1. From the 'Old' section select the mutation moving the bar</p>
+                      <p> 2. From the 'New' section select the new mutation</p>
+                      <p> 3. Check the mutation provided in the 'Mutation code'</p>
+                      <p>Run the model!</p>
+                    </div>
+                  </div>
+                 
+            <!-- DNA -->
+            <div class="dnaShow" v-if="dnaShow">
+                <h2>DNA Mutation</h2>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                            <div class="card mb-3">
+                                <div class="card-header">
+                                    Old DNA Sequence<br>
+                                    <span class="codeIndi">[{{dnaMut[dnaSequence[dna]][0]}}]</span>
+                                </div>
+                                <div class="row g-0">
+                                    <div class="col-md-8">
+                                        <div class="card-body secuencia">
+                                            <span class="codeSeq" v-for="(item, index) in dnaSequence" :id="index" :class="[dna == index ? 'highlight' : 'lowlight']">{{item}}</span>                                           
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 molDiv">
+                                        <img :src="'IMG/' + dnaMut[dnaSequence[dna]][1]" class="img-fluid rounded-start molImage" alt="dnaMut[dnaSequence[dna]][0]">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                            <div class="card mb-3">
+                                <div class="card-header">
+                                    New DNA Sequence
+                                    <span class="codeIndi">[{{dnaMut[dnaPostSequence[dna]][0]}}]</span>
+                                </div>
+                                <div class="row g-0">
+                                    <div class="col-md-4 molDiv">
+                                        <img :src="'IMG/' + dnaMut[dnaPostSequence[dna]][1]" class="img-fluid rounded-start molImage" alt="dnaMut[dnaPostSequence[dna]][0]">
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="card-body secuencia">
+                                            <span class="codeSeq" v-for="(item2, index2) in dnaPostSequence" :id="index2" :class="[dna == index2 ? 'redlight' : 'lowlight']">{{item2}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row editSeq">
+                        <!--Slider-->
+                        <div class="container col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                            <div class="slider">
+                                <label for="dnaSlider" class="form-label">Select nucleotide:&nbsp;&nbsp;</label><span class="codeIndi">[{{+dna + 1}}]</span>
+                                <input type="range" class="form-range" min="0" :max="dnaSequence.length - 1" id="dnaSlider" v-model="dna" :change="updateDNAMut()" :disabled="dnaSlider || disableControls">
+                            </div>    
+                        </div>
+                        <!--Buttons-->
+                        <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                            <div class="btn-group" role="group" aria-label="Buttons to select alternative nucleotide">
+                                <div class="container row mutOpts">    
+                                    <div class="col mutOpts" v-for="(value, name, index) in dnaMut">
+                                        <input type="radio" class="btn-check" name="btnradio" id="'btnRadio' + index" autocomplete="off" v-on:click="onDNA(name)" :disabled="disableControls">
+                                        <label class="btn btn-outline-primary" :for="'btnRadio' + index" :title="value[0]">{{name}}</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row justify-content-center">
+                        <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
+                            <h5>Final</h5>
+                            <div class="row">
+                                <div class="col-6 mutDesc">
+                                    <span>Mutation code:</span>
+                                </div>
+                                <div class="col-6">
+                                    <input type="text" name="mutcode" v-model="dnaMutCode" disabled="true">
+                                </div>
+                            </div>
+                            <button type="button" class="btn btn-success runButton" v-on:click="runDNA()":disabled="disableControls">Run model</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Amino Acid -->
+            <div class="aaShow" v-if="aaShow">
+                <h2>Amino Acid Mutation</h2>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                            <div class="card mb-3">
+                                <div class="card-header">
+                                    Old Amino Acid Sequence<br>
+                                    <span class="codeIndi">[{{aaMut[aaSequence[aa]][0]}}]</span>
+                                </div>
+                                <div class="row g-0">
+                                    <div class="col-md-8">
+                                        <div class="card-body secuencia">
+                                            <span class="codeSeq" v-for="(item, index) in aaSequence" :id="index" :class="[aa == index ? 'highlight' : 'lowlight']"> {{item}}</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 molDiv">
+                                        <img :src="'IMG/' + aaMut[aaSequence[aa]][1]" class="img-fluid rounded-start molImage" alt="aaMut[aaSequence[aa]][0]">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                            <div class="card mb-3">
+                                <div class="card-header">
+                                    New Amino Acid Sequence<br>
+                                    <span class="codeIndi">[{{aaMut[aaPostSequence[aa]][0]}}]</span>
+                                </div>
+                                <div class="row g-0">
+                                    <div class="col-md-4 molDiv">
+                                        <img :src="'IMG/' + aaMut[aaPostSequence[aa]][1]" class="img-fluid rounded-start molImage" alt="aaMut[aaSequence[aa]][0]">
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="card-body secuencia">
+                                            <span class="codeSeq" v-for="(item2, index2) in aaPostSequence" :id="index2" :class="[aa == index2 ? 'redlight' : 'lowlight']"> {{item2}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row container editSeq">
+                        <!--Slider-->
+                        <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                            <div class="slider">
+                                <label for="aaSlider" class="form-label">Select amino acid</label>
+                                <input type="range" class="form-range" min="0" :max="aaSequence.length - 1" id="aaSlider" v-model="aa" :change="updateAAMut()" :disabled="aaSlider || disableControls">
+                            </div>
+                        </div>
+                        <!--Buttons-->
+                        <div class="container col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                            <div class="btn-group" role="group" aria-label="Buttons to select alternative amino acid">
+                                <div class="row mutOpts">    
+                                    <div class="col mutOpts" v-for="(value, name, index) in aaMut">
+                                        <input type="radio" class="btn-check" name="btnradio" id="'btnRadio' + index" autocomplete="off" v-on:click="onAA(name)" :disabled="disableControls">
+                                        <label class="btn btn-outline-primary" :for="'btnRadio' + index" :title="value[0]">{{name}}</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row justify-content-center">
+                        <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
+                            <h5>Final</h5>
+                            <div class="row">
+                                <div class="col-6 mutDesc">
+                                    Mutation code:
+                                </div>
+                                <div class="col-6 mutCode">
+                                    <input type="text" name="mutcode" v-model="aaMutCode" disabled="true">
+                                </div>
+                            </div>
+                            <button type="button" class="btn btn-success runButton" v-on:click="runAA()" :disabled="disableControls">Run model</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Spinner -->
+            <div class="spinnerShow" v-if="spinnerShow">
+                <img src="IMG/spinner.gif">
+            </div>
+            <!-- Results -->
+            <div class="resultsShow" v-if="resultsShow">
+                <h2>Results</h2>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                            <div class="card">
+                                <div class="card-header">
+                                    Machine Learning Prediction
+                                </div>
+                                <div class="card-body">
+                                    <div class="row"> <!-- For the pathogenic prediction-->
+                                        <div class="col-6 mutDesc">Pathogenic:</div>
+                                        <div class="col-6">
+                                            <input type="text" name="patho" disabled="true" v-model="patho">
+                                        </div>
+                                    </div>
+                                    <div class="row"> <!--For the percentage result-->
+                                        <div class="col-6 mutDesc">Percent:</div>
+                                        <div class="col-6">
+                                            <input type="text" name="perce" disabled="true" v-model="perce">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-6 mutDesc">Model status:</div>
+                                        <div class="col-6">
+                                            <input type="text" none="model" disabled="true" v-model="model">
+                                        </div>
+                                    </div>
+                                </div>  
+                            </div>  
+                        </div>
+                        <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6"></div>
+                            <div class="card">
+                                <div class="card-header">
+                                    Start over?
+                                </div>
+                                <div class="card-body">
+                                    <p class="card-text">Do you want to run the model again?</p>
+                                    <button type="button" class="btn btn-primary">Run again</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- JavaScript Bundle with Popper -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
+	    <script src="JS/action.js"></script>
+    </body>
+</html>
