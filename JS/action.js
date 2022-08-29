@@ -117,7 +117,7 @@ createApp({
                 var primera = this.dnaMutCode.slice(0,1); //First letter of the code
                 var ultima = this.dnaMutCode.slice(-1); //Last letter of the code
                 //If any of the letters in the code does not correspond or if they are the same
-                if (Object.keys(this.dnaMut), includes(primera) && Object.keys(this.dnaMut), includes(ultima) && (primera != ultima)) {
+                if (Object.keys(this.dnaMut).includes(primera) && Object.keys(this.dnaMut).includes(ultima) && (primera != ultima)) {
                     var numero = this.dnaMutCode.slice(1,-1)
                     //If the code's number is bigger or smaller from the one original in the code
                     if ((+numero >= 1) && (+numero <= this.dnaSequence.length)) {
@@ -161,7 +161,7 @@ createApp({
                 var primera = this.aaMutCode.slice(0,1); //First letter of the code
                 var ultima = this.aaMutCode.slice(-1); //Last letter of the code
                 //If any of the letters in the code does not correspond or if they are the same
-                if (Object.keys(this.aaMut), includes(primera) && Object.keys(this.aaMut), includes(ultima) && (primera != ultima)) {
+                if (Object.keys(this.aaMut).includes(primera) && Object.keys(this.aaMut).includes(ultima) && (primera != ultima)) {
                     var numero = this.aaMutCode.slice(1,-1)
                     //If the code's number is bigger or smaller from the one original in the code
                     if ((+numero >= 1) && (+numero <= this.aaSequence.length)) {
