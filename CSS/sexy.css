@@ -6,41 +6,21 @@
     }
 }
 
-@media (min-width: 768px){
-    .principal {
-        width: 80%;
-        margin-left: 10%;
-        margin-right: 10%;
-    }
-    .bild img {
-        width: calc(100% * 0.5);
-        height: fit-content;
-    }
-}
-
-@media (min-width: 1024px) {
-    .principal {
-        width: 70%;
-        margin-left: 15%;
-        margin-right: 15%;
-    }
-}
-
-@media (max-width: 992px) {
-    .mainRow {
-        display: inline-block;
-    }
+.mainDiv {
+	margin-top: 1em;
+	padding-top: 2%;
+    padding-bottom: 5%;
+    background: #FFFFFF;
+    border-width: 1px;
+    border-style: solid;
+	border-color: #d7d7d7;
+	border-radius: 5px;
 }
 
 body {
     background: #fdfdfd;
 }
 
-.card {
-    height: 100%;
-    margin-top: 0.5em;
-    margin-bottom: 0.5em;
-}
 
 .accordion {
     margin-bottom: 2em;
