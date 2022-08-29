@@ -113,7 +113,7 @@ createApp({
         //Method to send the code of the mutation to the DNA-backend
         runDNA() {
             //If the code's length is different from the original (shorter or longer)
-            if ((this.dnaMutCode.length >=3) && (this.dnaMutCode.length<= 5)) {
+            if ((this.dnaMutCode.length >= 3) && (this.dnaMutCode.length <= 5)) {
                 var primera = this.dnaMutCode.slice(0,1); //First letter of the code
                 var ultima = this.dnaMutCode.slice(-1); //Last letter of the code
                 //If any of the letters in the code does not correspond or if they are the same
