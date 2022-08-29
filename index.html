@@ -112,7 +112,7 @@
                             <div class="btn-group" role="group" aria-label="Buttons to select alternative nucleotide">
                                 <div class="container row mutOpts" style="display: contents;">    
                                     <div class="col mutOpts" v-for="(value, name, index) in dnaMut">
-                                        <input type="radio" class="btn-check" name="btnradio" id="'btnRadio' + index" autocomplete="off" v-on:click="onDNA(name)" :disabled="disableControls">
+                                        <input type="radio" class="btn-check" name="btnradio" :id="'btnRadio' + index" autocomplete="off" v-on:click="onDNA(name)" :disabled="disableControls">
                                         <label class="btn btn-outline-primary" :for="'btnRadio' + index" :title="value[0]">{{name}}</label>
                                     </div>
                                 </div>
@@ -190,7 +190,7 @@
                             <div class="btn-group" role="group" aria-label="Buttons to select alternative amino acid">
                                 <div class="container row mutOpts">    
                                     <div class="col mutOpts" v-for="(value, name, index) in aaMut">
-                                        <input type="radio" class="btn-check" name="btnradio" id="'btnRadio' + index" autocomplete="off" v-on:click="onAA(name)" :disabled="disableControls">
+                                        <input type="radio" class="btn-check" name="btnradio" :id="'btnRadio' + index" autocomplete="off" v-on:click="onAA(name)" :disabled="disableControls">
                                         <label class="btn btn-outline-primary" :for="'btnRadio' + index" :title="value[0]">{{name}}</label>
                                     </div>
                                 </div>
